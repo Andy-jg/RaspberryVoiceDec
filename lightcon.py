@@ -116,13 +116,14 @@ while(True):
        	os.system('mplayer "%s"'%(url))
        	time.sleep(4)
        	#os.system('cd /home/pi/Desktop/scripts&&./light on')
-       #commands.getoutput('sudo gpio write '+str(FAN_GPIO)+' 1')
+        commands.getoutput('sudo gpio write '+str(FAN_GPIO)+' 1')
     if "关" in site:
        	answer = '好的，正在为您关灯，请稍后'
        	url = "http://tsn.baidu.com/text2audio?tex="+answer+"&lan=zh&per=0&pit=1&spd=7&cuid=b827ebdd1672&ctp=1&tok=24.5c811e2f04b4be6d96a2dae66b169dde.2592000.1514039148.282335-9127702"
        	os.system('mplayer "%s"'%(url))
        #os.system('cd /home/pi/Desktop/scripts&&./light off
       	print "notwork"
+      	time.sleep(4)
        	commands.getoutput('sudo gpio write '+str(FAN_GPIO)+' 0')
 
 
