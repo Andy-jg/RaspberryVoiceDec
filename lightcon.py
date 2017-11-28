@@ -53,7 +53,7 @@ def dump_res(buf):
         print duihua
     else :
     	print 'failget!!'
-    #	duihua="fail"
+    	duihua="fail"
 
 def use_cloud(token):
     fp = wave.open(filename, 'rb')
@@ -96,17 +96,20 @@ key = 'dpWei1rMPNcGrzQIejZlRa0O'
 api = 'http://www.tuling123.com/openapi/api?key=' + key + '&info='
 commands.getoutput('sudo gpio mode '+str(FAN_GPIO)+' OUTPUT')
 while(True):
-
+    #time.sleep(5)
+    time.sleep(3)
     os.system('sudo arecord -D "plughw:1,0" -f S16_LE -d 4 -r 8000 /home/pi/Public/asr.wav')
-    print "delayt5s"
-    time.sleep(2)
-    print "startRecord"
+    print "delayt2s"
+    time.sleep(3)
+    #print "startRecord"
     use_cloud(token)
     print "result"
     print duihua
     site = duihua
-
-    print "workCheck"
+    #os.system('sudo rm  /home/pi/Public/asr.wav')
+    #print "workCheck"
+    if "fail" in site: #在返回的文本里寻找“开”
+    	time.sleep(15)
     if "开" in site: #在返回的文本里寻找“开”
     	print "work"
         commands.getoutput('sudo gpio write '+str(FAN_GPIO)+' 1')
@@ -114,17 +117,28 @@ while(True):
        	answer = '好的，正在为您开灯，请稍后'
        	url = "http://tsn.baidu.com/text2audio?tex="+answer+"&lan=zh&per=0&pit=1&spd=7&cuid=b827ebdd1672&ctp=1&tok=24.5c811e2f04b4be6d96a2dae66b169dde.2592000.1514039148.282335-9127702"
        	os.system('mplayer "%s"'%(url))
-       	time.sleep(4)
+       	time.sleep(5)
        	#os.system('cd /home/pi/Desktop/scripts&&./light on')
         commands.getoutput('sudo gpio write '+str(FAN_GPIO)+' 1')
+        #commands.getoutput('sudo rm asr.wav')
     if "关" in site:
-       	answer = '好的，正在为您关灯，请稍后'
+       	answer = '好的，正在为为您关灯，请稍后'
        	url = "http://tsn.baidu.com/text2audio?tex="+answer+"&lan=zh&per=0&pit=1&spd=7&cuid=b827ebdd1672&ctp=1&tok=24.5c811e2f04b4be6d96a2dae66b169dde.2592000.1514039148.282335-9127702"
        	os.system('mplayer "%s"'%(url))
        #os.system('cd /home/pi/Desktop/scripts&&./light off
-      	print "notwork"
-      	time.sleep(4)
+      	#print "notwork"
+      	time.sleep(5)
+      	#commands.getoutput('sudo rm asr.wav')
        	commands.getoutput('sudo gpio write '+str(FAN_GPIO)+' 0')
-
+   	#if "音乐" in site:
+       	#answer = '好的，正在为为您关灯，请稍后'
+       	#url = "http://lhttp.qingting.fm/live/387/64k.mp3"
+       	
+ 		#os.system('sudo mplayer http://lhttp.qingting.fm/live/387/64k.mp3')
+       #os.system('cd /home/pi/Desktop/scripts&&./light off
+      	#print "notwork"
+      	#time.sleep(5)
+      	#commands.getoutput('sudo rm asr.wav')
+       	#commands.getoutput('sudo gpio write '+str(FAN_GPIO)+' 0')
 
     
